@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="opinion-form">
+    <h2>Napisz opinię</h2>
+    <form th:action="@{/write}" th:object="${opinion}" method="post" onsubmit="disableButton()">
+        <div class="form-control">
+            <label for="country">Kraj</label>
+            <input type="text" id="country" name="country" required>
+        </div>
+        <div class="form-control">
+            <label for="city">Miasto</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+        <div class="form-control">
+            <label for="university">Uczelnia</label>
+            <input type="text" id="university" name="university" required>
+        </div>
+        <div class="form-control">
+            <label for="content">Opinia</label>
+            <input type="text" id="content" name="content" required>
+        </div>
+        <!--
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        -->
+        <div class="form-control">
+            <button type="submit" id="registerBtn">Register</button>
+        </div>
+    </form>
+</div>
+
+
+
+</body>
+</html>

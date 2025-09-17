@@ -1,0 +1,34 @@
+<!-- src/main/resources/templates/login.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+
+        <!-- Show error message if login fails -->
+        <div th:if="${error}" style="color: red;">
+            <p>Invalid username or password</p>
+        </div>
+    </form>
+
+    <!-- Optionally provide a link to the registration page -->
+    <a href="/register">Don't have an account? Register here</a>
+</body>
+</html>
