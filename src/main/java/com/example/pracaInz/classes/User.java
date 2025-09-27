@@ -1,4 +1,4 @@
-package com.example.cwmprojekt.classes;
+package com.example.pracaInz.classes;
 
 
 import jakarta.persistence.*;

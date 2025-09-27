@@ -1,8 +1,8 @@
-package com.example.cwmprojekt.controllers;
+package com.example.pracaInz.controllers;
 
-import com.example.cwmprojekt.classes.User;
-import com.example.cwmprojekt.repository.UserRepository;
-import com.example.cwmprojekt.services.UserService;
+import com.example.pracaInz.classes.User;
+import com.example.pracaInz.repository.UserRepository;
+import com.example.pracaInz.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

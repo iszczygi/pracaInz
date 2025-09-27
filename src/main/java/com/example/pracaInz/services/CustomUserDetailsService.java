@@ -1,6 +1,6 @@
-package com.example.cwmprojekt.services;
+package com.example.pracaInz.services;
 
-import com.example.cwmprojekt.repository.UserRepository;
+import com.example.pracaInz.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Fetch the user from the database by username
-        com.example.cwmprojekt.classes.User user = userRepository.findByUsername(username)
+        com.example.pracaInz.classes.User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         // Create a list with a single authority based on the user's role

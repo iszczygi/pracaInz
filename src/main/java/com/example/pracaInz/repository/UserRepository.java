@@ -1,6 +1,6 @@
-package com.example.cwmprojekt.repository;
+package com.example.pracaInz.repository;
 
-import com.example.cwmprojekt.classes.User;
+import com.example.pracaInz.classes.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

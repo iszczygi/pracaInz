@@ -1,4 +1,4 @@
-package com.example.cwmprojekt;
+package com.example.pracaInz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

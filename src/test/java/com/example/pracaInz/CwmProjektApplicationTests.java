@@ -1,4 +1,4 @@
-package com.example.cwmprojekt;
+package com.example.pracaInz;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

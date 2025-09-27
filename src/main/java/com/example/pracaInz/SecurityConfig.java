@@ -1,6 +1,6 @@
-package com.example.cwmprojekt;
+package com.example.pracaInz;
 
-import com.example.cwmprojekt.services.CustomUserDetailsService;
+import com.example.pracaInz.services.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

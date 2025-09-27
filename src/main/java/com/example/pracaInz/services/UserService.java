@@ -1,7 +1,7 @@
-package com.example.cwmprojekt.services;
+package com.example.pracaInz.services;
 
-import com.example.cwmprojekt.classes.User;
-import com.example.cwmprojekt.repository.UserRepository;
+import com.example.pracaInz.classes.User;
+import com.example.pracaInz.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

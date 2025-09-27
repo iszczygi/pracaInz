@@ -1,15 +1,13 @@
-package com.example.cwmprojekt.services;
+package com.example.pracaInz.services;
 
 
-import com.example.cwmprojekt.classes.Opinion;
-import com.example.cwmprojekt.repository.OpinionRepository;
-import com.example.cwmprojekt.repository.UserRepository;
+import com.example.pracaInz.classes.Opinion;
+import com.example.pracaInz.repository.OpinionRepository;
+import com.example.pracaInz.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.beans.Transient;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class OpinionService {
                 .getAuthentication().getName();
 
         // Fetch the User entity from the database
-        com.example.cwmprojekt.classes.User user = userRepository.findByUsername(username)
+        com.example.pracaInz.classes.User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Set the User in the Opinion entity

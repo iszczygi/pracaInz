@@ -1,4 +1,4 @@
-package com.example.cwmprojekt;
+package com.example.pracaInz;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

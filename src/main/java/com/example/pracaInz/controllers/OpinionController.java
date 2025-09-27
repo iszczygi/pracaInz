@@ -1,8 +1,8 @@
-package com.example.cwmprojekt.controllers;
+package com.example.pracaInz.controllers;
 
 
-import com.example.cwmprojekt.classes.Opinion;
-import com.example.cwmprojekt.services.OpinionService;
+import com.example.pracaInz.classes.Opinion;
+import com.example.pracaInz.services.OpinionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
