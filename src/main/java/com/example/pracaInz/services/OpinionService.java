@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -33,4 +35,23 @@ public class OpinionService {
         opinion.setUser(user);
         Opinion savedOpinion = opinionRepository.save(opinion);
     }
+
+    public List<Opinion> getAllOpinions() {
+        return opinionRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Opinion> getFilteredOpinions(String country, String city) {
+        if (country != null && !country.isEmpty() && city != null && !city.isEmpty()) {
+            return opinionRepository.findByCountryAndCity(country, city);
+        } else if (country != null && !country.isEmpty()) {
+            return opinionRepository.findByCountry(country);
+        } else if (city != null && !city.isEmpty()) {
+            return opinionRepository.findByCity(city);
+        } else {
+            return opinionRepository.findAll();
+        }
+    }
+
+
 }

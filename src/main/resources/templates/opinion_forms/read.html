@@ -2,9 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opinions</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <h1>Opinions</h1>
 
+    <!-- Filter Form -->
+    <form method="get" action="/read">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" placeholder="Enter country">
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter city">
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <hr>
+
+    <!-- Opinions Table -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Opinion</th>
+                <th>Country</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="opinion : ${opinions}">
+                <td th:text="${opinion.id}"></td>
+                <td th:text="${opinion.content}"></td>
+                <td th:text="${opinion.country}"></td>
+                <td th:text="${opinion.city}"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class OpinionController {
@@ -25,4 +28,22 @@ public class OpinionController {
     public String showOpinionForm() {
         return "opinion_forms/write"; // Return the opinion_form.html template
     }
+
+
+    @GetMapping("/read")
+    public String showReadOpinions(
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String city,
+            org.springframework.ui.Model model) {
+        List<Opinion> opinions;
+        if ((country != null && !country.isEmpty()) || (city != null && !city.isEmpty())) {
+            opinions = opinionService.getFilteredOpinions(country, city);
+        } else {
+            opinions = opinionService.getAllOpinions();
+        }
+        model.addAttribute("opinions", opinions);
+        return "opinion_forms/read";
+    }
+
+
 }
