@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+    <html lang="pl" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="'Profil - ' + ${user.username}">Profil Użytkownika</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+
+            .profile-container {
+                max-width: 800px;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+            }
+
+            .opinion {
+                border-top: 1px solid #eee;
+                padding: 15px 0;
+            }
+
+            .opinion:first-of-type {
+                border-top: none;
+            }
+
+            .opinion-meta {
+                font-size: 0.9em;
+                color: #555;
+                margin-top: 10px;
+            }
+
+            .opinion-date {
+                font-size: 0.9em;
+                color: #666;
+                margin-top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="profile-container">
+        <h2 th:text="'Profil użytkownika: ' + ${user.username}">Profil użytkownika</h2>
+
+        <h3>Twoje opinie:</h3>
+
+        <div th:if="${!opinions.isEmpty()}">
+            <div th:each="opinion : ${opinions}" class="opinion">
+                <p th:text="${opinion.content}">Treść opinii...</p>
+                <div class="opinion-meta">
+                    <span th:text="'Kraj: ' + ${opinion.country} + ' | Miasto: ' + ${opinion.city} + ' | Uczelnia: ' + ${opinion.university}"></span>
+                </div>
+                <p class="opinion-date" th:text="'Dodano: ' + ${opinion.date}">Data dodania</p>
+            </div>
+        </div>
+
+        <div th:if="${opinions.isEmpty()}">
+            <p>Nie dodałeś/aś jeszcze żadnych opinii.</p>
+        </div>
+    </div>
+
+    </body>
+    </html>
