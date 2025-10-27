@@ -65,6 +65,9 @@
     </style>
 </head>
 <body>
+<div class="form-control" th:if="${error}">
+    <input type="hidden" id="errorMessage" th:value="${error}">
+</div>
 <div class="register-form">
     <h2>Register</h2>
     <form th:action="@{/register}" th:object="${user}" method="post" onsubmit="disableButton()">
@@ -89,9 +92,20 @@
             <input type="password" id="password" name="password" required>
         </div>
         <div class="form-control">
+            <label th:for="captcha" th:text="${captchaQuestion}"></label>
+            <input type="text" id="captcha" name="captcha" required>
+        </div>
+        <div class="form-control">
             <button type="submit" id="registerBtn">Register</button>
         </div>
     </form>
 </div>
+<script>
+    // Check if the error message exists and display it as a popup
+    const errorMessage = document.getElementById("errorMessage");
+    if (errorMessage && errorMessage.value) {
+        alert(errorMessage.value);
+    }
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.example.pracaInz.classes.User;
 import com.example.pracaInz.repository.OpinionRepository;
 import com.example.pracaInz.repository.UserRepository;
 import com.example.pracaInz.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,19 +41,32 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(Model model, HttpSession session) {
+        int num1 = (int) (Math.random() * 10) + 1;
+        int num2 = (int) (Math.random() * 10) + 1;
+
+        session.setAttribute("captchaAnswer", num1 + num2);
+
+        model.addAttribute("captchaQuestion", "What is " + num1 + " + " + num2 + "?");
         model.addAttribute("user", new User());
         return "user_forms/register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model) {
+    public String registerUser(@ModelAttribute User user, Model model, @RequestParam("captcha") String captcha, HttpSession session) {
         if (userRepository.existsByEmail(user.getEmail())) {
             model.addAttribute("error", "Email is already registered");
             return "user_forms/register";
         }
         if (userRepository.existsByUsername(user.getUsername())) {
             model.addAttribute("error", "Username is already taken");
+            return "user_forms/register";
+        }
+
+        Integer correctAnswer = (Integer) session.getAttribute("captchaAnswer");
+        if (correctAnswer == null || !captcha.equals(correctAnswer.toString())) {
+            model.addAttribute("error", "CAPTCHA answer is incorrect");
+            model.addAttribute("user", new User());
             return "user_forms/register";
         }
 
