@@ -6,7 +6,7 @@
 - [x] Basic UI Design
 - [x] User Roles
 - [x] User Profiles, including all written opinions
-
+- [x] Spam Protection
 
 # Planned Features
 - [ ] Advanced Opinion Filtering
@@ -15,6 +15,5 @@
 - [ ] More in-depth Opinion Form
 - [ ] Opinion Scores, like "helpfulness" or "reliability"
 - [ ] UI/UX Improvements
-- [ ] Spam Protection
 - [ ] Vector Database Integration
 - [ ] AI-Powered chatbot for answering questions about universities based on opinions with RAG
