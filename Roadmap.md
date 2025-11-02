@@ -7,11 +7,11 @@
 - [x] User Roles
 - [x] User Profiles, including all written opinions
 - [x] Spam Protection
+- [x] Partnered Universities Section
 
 # Planned Features
 - [ ] Advanced Opinion Filtering
 - [ ] Admin Dashboard for managing users and opinions
-- [ ] Partnered Universities Section
 - [ ] More in-depth Opinion Form
 - [ ] Opinion Scores, like "helpfulness" or "reliability"
 - [ ] UI/UX Improvements

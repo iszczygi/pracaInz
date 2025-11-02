@@ -26,6 +26,11 @@ public interface OpinionRepository extends JpaRepository<Opinion, Integer> {
     @Query("SELECT o FROM Opinion o WHERE LOWER(o.city) = LOWER(:city)")
     List<Opinion> findByCity(@Param("city") String city);
 
+    // Find opinions by university
+    @Query("SELECT o FROM Opinion o WHERE LOWER(o.university) = LOWER(:university)")
+    List<Opinion> findByUniversity(@Param("university") String university);
+
+
 
     List<Opinion> findByUser(User user);
 

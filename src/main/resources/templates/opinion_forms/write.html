@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Write Opinion</title>
 </head>
 <body>
 
@@ -11,33 +11,89 @@
     <form th:action="@{/write}" th:object="${opinion}" method="post" onsubmit="disableButton()">
         <div class="form-control">
             <label for="country">Kraj</label>
-            <input type="text" id="country" name="country" required>
+            <select id="country" name="country" required onchange="loadCities()">
+                <option value="">-- Wybierz kraj --</option>
+            </select>
         </div>
         <div class="form-control">
             <label for="city">Miasto</label>
-            <input type="text" id="city" name="city" required>
+            <select id="city" name="city" required onchange="loadUniversities()">
+                <option value="">-- Wybierz miasto --</option>
+            </select>
         </div>
         <div class="form-control">
             <label for="university">Uczelnia</label>
-            <input type="text" id="university" name="university" required>
+            <select id="university" name="university" required>
+                <option value="">-- Wybierz uczelnię --</option>
+            </select>
         </div>
         <div class="form-control">
             <label for="content">Opinia</label>
             <input type="text" id="content" name="content" required>
         </div>
-        <!--
-        <div class="form-control">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        -->
         <div class="form-control">
             <button type="submit" id="registerBtn">Register</button>
         </div>
     </form>
 </div>
 
+<script>
+    // Load countries on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/api/locations/countries')
+            .then(response => response.json())
+            .then(data => {
+                const countryDropdown = document.getElementById('country');
+                data.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    countryDropdown.appendChild(option);
+                });
+            });
+    });
 
+    // Load cities based on selected country
+    function loadCities() {
+        const country = document.getElementById('country').value;
+        const cityDropdown = document.getElementById('city');
+        cityDropdown.innerHTML = '<option value="">-- Wybierz miasto --</option>'; // Reset cities
+        document.getElementById('university').innerHTML = '<option value="">-- Wybierz uczelnię --</option>'; // Reset universities
+
+        if (country) {
+            fetch(`/api/locations/countries/${country}/cities`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        cityDropdown.appendChild(option);
+                    });
+                });
+        }
+    }
+
+    // Load universities based on selected city
+    function loadUniversities() {
+        const city = document.getElementById('city').value;
+        const universityDropdown = document.getElementById('university');
+        universityDropdown.innerHTML = '<option value="">-- Wybierz uczelnię --</option>'; // Reset universities
+
+        if (city) {
+            fetch(`/api/locations/cities/${city}/universities`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(university => {
+                        const option = document.createElement('option');
+                        option.value = university;
+                        option.textContent = university;
+                        universityDropdown.appendChild(option);
+                    });
+                });
+        }
+    }
+</script>
 
 </body>
 </html>

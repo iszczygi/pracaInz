@@ -30,20 +30,16 @@ public class OpinionController {
     }
 
 
-    @GetMapping("/read")
-    public String showReadOpinions(
-            @RequestParam(required = false) String country,
-            @RequestParam(required = false) String city,
-            org.springframework.ui.Model model) {
-        List<Opinion> opinions;
-        if ((country != null && !country.isEmpty()) || (city != null && !city.isEmpty())) {
-            opinions = opinionService.getFilteredOpinions(country, city);
-        } else {
-            opinions = opinionService.getAllOpinions();
-        }
-        model.addAttribute("opinions", opinions);
-        return "opinion_forms/read";
-    }
+@GetMapping("/read")
+public String showReadOpinions(
+        @RequestParam(required = false) String country,
+        @RequestParam(required = false) String city,
+        @RequestParam(required = false) String university,
+        org.springframework.ui.Model model) {
+    List<Opinion> opinions = opinionService.getFilteredOpinions(country, city, university);
+    model.addAttribute("opinions", opinions);
+    return "opinion_forms/read";
+}
 
 
 }

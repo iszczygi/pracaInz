@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Location</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Add New Location</h1>
+
+    <form method="post" th:action="@{/location_write}">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" placeholder="Enter country" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter city" required>
+
+        <label for="university">University:</label>
+        <input type="text" id="university" name="university" placeholder="Enter university" required>
+
+        <button type="submit">Add Location</button>
+    </form>
+</body>
+</html>

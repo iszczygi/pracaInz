@@ -40,18 +40,22 @@ public class OpinionService {
         return opinionRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public List<Opinion> getFilteredOpinions(String country, String city) {
-        if (country != null && !country.isEmpty() && city != null && !city.isEmpty()) {
-            return opinionRepository.findByCountryAndCity(country, city);
-        } else if (country != null && !country.isEmpty()) {
-            return opinionRepository.findByCountry(country);
-        } else if (city != null && !city.isEmpty()) {
-            return opinionRepository.findByCity(city);
-        } else {
-            return opinionRepository.findAll();
-        }
+@Transactional(readOnly = true)
+public List<Opinion> getFilteredOpinions(String country, String city, String university) {
+    if (university != null && !university.isEmpty()) {
+        return opinionRepository.findByUniversity(university);
     }
+    if (country != null && !country.isEmpty() && city != null && !city.isEmpty()) {
+        return opinionRepository.findByCountryAndCity(country, city);
+    }
+    if (country != null && !country.isEmpty()) {
+        return opinionRepository.findByCountry(country);
+    }
+    if (city != null && !city.isEmpty()) {
+        return opinionRepository.findByCity(city);
+    }
+    return opinionRepository.findAll();
+}
 
 
 }
