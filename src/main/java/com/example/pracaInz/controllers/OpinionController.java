@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class OpinionController {
@@ -58,6 +60,13 @@ public class OpinionController {
             @RequestParam int value) {
         voteService.vote(opinionId, userId, value);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/opinion/score/{id}")
+    @ResponseBody
+    public Map<String, Integer> getOpinionScore(@PathVariable int id) {
+        int score = opinionService.getOpinionById(id).getScore();
+        return Collections.singletonMap("score", score);
     }
 
 

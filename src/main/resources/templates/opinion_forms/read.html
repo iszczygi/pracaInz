@@ -52,7 +52,7 @@
         <td th:text="${opinion.country}"></td>
         <td th:text="${opinion.city}"></td>
         <td th:text="${opinion.university}"></td>
-        <td th:text="${opinion.score}"></td>
+        <td th:attr="id='score-' + ${opinion.id}" th:text="${opinion.score}"></td>
         <td>
             <button th:onclick="'vote(' + ${opinion.id} + ', ' + ${currentUserId} + ', 1)'">Like</button>
             <button th:onclick="'vote(' + ${opinion.id} + ', ' + ${currentUserId} + ', -1)'">Dislike</button>
@@ -118,26 +118,36 @@
         }
     }
 
-function vote(opinionId, userId, value) {
-    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    function vote(opinionId, userId, value) {
+        const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-    fetch('/vote', {
-        method: 'POST',
-        headers: {
-            [header]: token,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `opinionId=${opinionId}&userId=${userId}&value=${value}`
-    })
-    .then(response => {
-        if (response.ok) {
-            alert('Głos oddany!');
-        } else {
-            alert('Błąd głosowania!');
-        }
-    });
-}
+        fetch('/vote', {
+            method: 'POST',
+            headers: {
+                [header]: token,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `opinionId=${opinionId}&userId=${userId}&value=${value}`
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Pobierz nowy wynik opinii
+                    fetch(`/opinion/score/${opinionId}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            const scoreCell = document.getElementById(`score-${opinionId}`);
+                            if (scoreCell) {
+                                scoreCell.textContent = data.score;
+                            } else {
+                                console.error(`Nie znaleziono komórki wyniku dla opinionId: ${opinionId}`);
+                            }
+                        });
+                } else {
+                    alert('Błąd głosowania!');
+                }
+            });
+    }
 </script>
 </body>
 </html>
