@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,9 @@ public class Opinion {
     @JoinColumn(name = "id_user")
     private User user;
 
+    @OneToMany(mappedBy = "opinion")
+    private List<Vote> votes;
+
     private String content;
     private String country;
     private String city;
@@ -27,5 +32,8 @@ public class Opinion {
     private String faculty;
     private String date;
 
+    public int getScore() {
+        return votes.stream().mapToInt(Vote::getValue).sum();
+    }
 
 }

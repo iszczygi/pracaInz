@@ -34,6 +34,11 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
     @Transactional  // This ensures the save operation is done in a transaction
     public User saveUser(User user) {
         if (user.getRole() == null) {

@@ -1,114 +1,143 @@
 <!DOCTYPE html>
-                            <html lang="en">
-                            <head>
-                                <meta charset="UTF-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                <title>Opinions</title>
-                                <link rel="stylesheet" href="/css/style.css">
-                            </head>
-                            <body>
-                                <h1>Opinions</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opinions</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Opinions</h1>
 
-                                <!-- Filter Form -->
-                                <form method="get" action="/read">
-                                    <label for="country">Country:</label>
-                                    <select id="country" name="country" onchange="loadCities()">
-                                        <option value="">-- Select Country --</option>
-                                    </select>
+<!-- Filter Form -->
+<form method="get" action="/read">
+    <label for="country">Country:</label>
+    <select id="country" name="country" onchange="loadCities()">
+        <option value="">-- Select Country --</option>
+    </select>
 
-                                    <label for="city">City:</label>
-                                    <select id="city" name="city" onchange="loadUniversities()">
-                                        <option value="">-- Select City --</option>
-                                    </select>
+    <label for="city">City:</label>
+    <select id="city" name="city" onchange="loadUniversities()">
+        <option value="">-- Select City --</option>
+    </select>
 
-                                    <label for="university">University:</label>
-                                    <select id="university" name="university">
-                                        <option value="">-- Select University --</option>
-                                    </select>
+    <label for="university">University:</label>
+    <select id="university" name="university">
+        <option value="">-- Select University --</option>
+    </select>
 
-                                    <button type="submit">Filter</button>
-                                </form>
+    <button type="submit">Filter</button>
+</form>
 
-                                <hr>
+<hr>
 
-                                <!-- Opinions Table -->
-                                <table border="1">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Opinion</th>
-                                            <th>Country</th>
-                                            <th>City</th>
-                                            <th>University</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="opinion : ${opinions}">
-                                            <td th:text="${opinion.id}"></td>
-                                            <td th:text="${opinion.content}"></td>
-                                            <td th:text="${opinion.country}"></td>
-                                            <td th:text="${opinion.city}"></td>
-                                            <td th:text="${opinion.university}"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+<!-- Opinions Table -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Opinion</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>University</th>
+        <th>Wynik</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="opinion : ${opinions}">
+        <td th:text="${opinion.id}"></td>
+        <td th:text="${opinion.content}"></td>
+        <td th:text="${opinion.country}"></td>
+        <td th:text="${opinion.city}"></td>
+        <td th:text="${opinion.university}"></td>
+        <td th:text="${opinion.score}"></td>
+        <td>
+            <button th:onclick="'vote(' + ${opinion.id} + ', ' + ${currentUserId} + ', 1)'">Like</button>
+            <button th:onclick="'vote(' + ${opinion.id} + ', ' + ${currentUserId} + ', -1)'">Dislike</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-                                <script>
-                                    // Load countries on page load
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        fetch('/api/locations/countries')
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                const countryDropdown = document.getElementById('country');
-                                                data.forEach(country => {
-                                                    const option = document.createElement('option');
-                                                    option.value = country;
-                                                    option.textContent = country;
-                                                    countryDropdown.appendChild(option);
-                                                });
-                                            });
-                                    });
+<script>
+    // Load countries on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/api/locations/countries')
+            .then(response => response.json())
+            .then(data => {
+                const countryDropdown = document.getElementById('country');
+                data.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    countryDropdown.appendChild(option);
+                });
+            });
+    });
 
-                                    // Load cities based on selected country
-                                    function loadCities() {
-                                        const country = document.getElementById('country').value;
-                                        const cityDropdown = document.getElementById('city');
-                                        cityDropdown.innerHTML = '<option value="">-- Select City --</option>'; // Reset cities
-                                        document.getElementById('university').innerHTML = '<option value="">-- Select University --</option>'; // Reset universities
+    // Load cities based on selected country
+    function loadCities() {
+        const country = document.getElementById('country').value;
+        const cityDropdown = document.getElementById('city');
+        cityDropdown.innerHTML = '<option value="">-- Select City --</option>'; // Reset cities
+        document.getElementById('university').innerHTML = '<option value="">-- Select University --</option>'; // Reset universities
 
-                                        if (country) {
-                                            fetch(`/api/locations/countries/${country}/cities`)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    data.forEach(city => {
-                                                        const option = document.createElement('option');
-                                                        option.value = city;
-                                                        option.textContent = city;
-                                                        cityDropdown.appendChild(option);
-                                                    });
-                                                });
-                                        }
-                                    }
+        if (country) {
+            fetch(`/api/locations/countries/${country}/cities`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        cityDropdown.appendChild(option);
+                    });
+                });
+        }
+    }
 
-                                    // Load universities based on selected city
-                                    function loadUniversities() {
-                                        const city = document.getElementById('city').value;
-                                        const universityDropdown = document.getElementById('university');
-                                        universityDropdown.innerHTML = '<option value="">-- Select University --</option>'; // Reset universities
+    // Load universities based on selected city
+    function loadUniversities() {
+        const city = document.getElementById('city').value;
+        const universityDropdown = document.getElementById('university');
+        universityDropdown.innerHTML = '<option value="">-- Select University --</option>'; // Reset universities
 
-                                        if (city) {
-                                            fetch(`/api/locations/cities/${city}/universities`)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    data.forEach(university => {
-                                                        const option = document.createElement('option');
-                                                        option.value = university;
-                                                        option.textContent = university;
-                                                        universityDropdown.appendChild(option);
-                                                    });
-                                                });
-                                        }
-                                    }
-                                </script>
-                            </body>
-                            </html>
+        if (city) {
+            fetch(`/api/locations/cities/${city}/universities`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(university => {
+                        const option = document.createElement('option');
+                        option.value = university;
+                        option.textContent = university;
+                        universityDropdown.appendChild(option);
+                    });
+                });
+        }
+    }
+
+function vote(opinionId, userId, value) {
+    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    fetch('/vote', {
+        method: 'POST',
+        headers: {
+            [header]: token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `opinionId=${opinionId}&userId=${userId}&value=${value}`
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Głos oddany!');
+        } else {
+            alert('Błąd głosowania!');
+        }
+    });
+}
+</script>
+</body>
+</html>
